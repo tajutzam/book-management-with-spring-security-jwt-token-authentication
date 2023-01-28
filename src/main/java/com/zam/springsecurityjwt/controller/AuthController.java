@@ -5,7 +5,9 @@ import com.zam.springsecurityjwt.dto.LoginRequest;
 import com.zam.springsecurityjwt.dto.RegisterRequest;
 import com.zam.springsecurityjwt.dto.AuthResponse;
 import com.zam.springsecurityjwt.service.impl.UserServiceImpl;
+import com.zam.springsecurityjwt.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +23,10 @@ public class AuthController {
     private UserServiceImpl userServiceImpl;
 
     @PostMapping("register")
-    public ResponseEntity<AuthResponse> register(@RequestBody  RegisterRequest registerRequest){
-        return ResponseEntity.ok(userServiceImpl.register(registerRequest));
+    public ResponseEntity<Object> register(@RequestBody  RegisterRequest registerRequest){
+        return userServiceImpl.register(registerRequest)
+                .map(authResponse -> Helper.generateResponse("Success registration", HttpStatus.CREATED, authResponse))
+                .orElse(Helper.generateResponse("Failed to registration , username has be already used", HttpStatus.BAD_REQUEST, null));
     }
 
     @PostMapping("login")

@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class UserServiceImpl implements UserDetailsService {
@@ -37,9 +39,13 @@ public class UserServiceImpl implements UserDetailsService {
         );
     }
 
-    public AuthResponse register(RegisterRequest registerRequest){
+    public Optional<AuthResponse> register(RegisterRequest registerRequest){
         System.out.println(registerRequest.getPassword());
         System.out.println(registerRequest.getRole());
+        Optional<User> userOptional = userRepository.findByUsername(registerRequest.getUsername());
+        if(userOptional.isPresent()){
+            return Optional.empty();
+        }
         var user = User.builder().
                 username(registerRequest.getUsername())
                         .name(registerRequest.getName())
@@ -48,9 +54,9 @@ public class UserServiceImpl implements UserDetailsService {
                 build();
         String token = jwtService.generateToken(user);
         userRepository.save(user);
-        return AuthResponse.builder().
+        return Optional.ofNullable(AuthResponse.builder().
                 token(token).
-                build();
+                build());
     }
 
     public AuthResponse login(LoginRequest loginRequest){

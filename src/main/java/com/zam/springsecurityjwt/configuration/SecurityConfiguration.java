@@ -19,51 +19,30 @@ public class SecurityConfiguration {
     private AuthenticationProvider authenticationProvider;
     @Autowired
     private JwtAuthFilter jwtFilter;
+
     private  final String[] AUTH_WHITELIST = {
-            "/api/v1/auth/**"  ,    "/authenticate",
+            "/authenticate",
             "/swagger-resources/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
-            "/webjars/**", "/api/v1/category/all" , "/api/v1/auth/login" ,
-            "/api/v1/book/{id}" ,
-            "/api/v1/category/{id}"
+            "/webjars/**" ,
+            "/api/v1/book/all" ,
+            "/api/v1/category/all" ,
+            "/api/v1/auth/**"
     };
-  /*  @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers(  "/api/v1/auth/**"  ,  "/authenticate",
-                        "/swagger-resources/**",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**",
-                        "/webjars/**", "/api/v1/category/all" , "/api/v1/auth/login" ,
-                        "/api/v1/book/{id}" ,
-                        "/api/v1/category/{id}")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }*/
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**" , "/api/v1/book/all" , "/api/v1/category/all" , "/api/v1/category/{id}")
-                .permitAll()
-                .requestMatchers(HttpMethod.POST , "/api/v1/book/**" , "/api/v1/category/**").hasAuthority("ADMIN")
+        return http.csrf().disable()
+                .authorizeHttpRequests().requestMatchers(AUTH_WHITELIST).permitAll()
+                .requestMatchers(HttpMethod.GET , "/api/v1/category/{id}" , "/api/v1/book/{id}").permitAll()
+                .requestMatchers(HttpMethod.POST , "/api/v1/category/{key}" , "/api/v1/book/{key}").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class);
-        return http.build();
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 }

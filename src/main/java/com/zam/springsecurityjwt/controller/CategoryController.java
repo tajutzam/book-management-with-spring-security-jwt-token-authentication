@@ -54,7 +54,7 @@ public class CategoryController {
            throw  new ApiRequestException(e.getMessage() , e.getCause());
        }
     }
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Object> updateBook(@RequestBody CategoryUpdateDTO categoryUpdateDTO){
 
         Optional<Category> optionalCategory = categoryService.findById(categoryUpdateDTO.getId());
@@ -75,7 +75,7 @@ public class CategoryController {
                 .map(category -> Helper.generateResponse("category found", HttpStatus.OK, category))
                 .orElse(Helper.generateResponse("Category not found", HttpStatus.NOT_FOUND, null));
     }
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<Object> deleteById(@RequestBody KeyDTO<Integer> keyDTO){
         try {
             boolean delete = categoryService.deleteById(keyDTO.getKey());
