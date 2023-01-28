@@ -10,4 +10,6 @@ class SpringSecurityJwtApplicationTests {
 	void contextLoads() {
 	}
 
+
+
 }

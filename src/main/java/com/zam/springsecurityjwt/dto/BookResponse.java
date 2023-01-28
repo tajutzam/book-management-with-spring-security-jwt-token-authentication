@@ -1,4 +1,4 @@
-package com.zam.springsecurityjwt.service;
+package com.zam.springsecurityjwt.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,4 +9,5 @@ public class BookResponse {
     private String description;
     private Integer pages;
     private Integer price;
+    private String categoryName;
 }

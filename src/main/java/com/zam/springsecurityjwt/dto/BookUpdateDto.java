@@ -1,14 +1,18 @@
 package com.zam.springsecurityjwt.dto;
 
-import com.zam.springsecurityjwt.entity.Category;
+import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
+
 @Data
-@RequiredArgsConstructor
-public class BookDTO {
+@Builder
+public class BookUpdateDto {
+
+    private Integer id;
     private String description;
     private String bookName;
     private Integer price;
     private Integer pages;
-    private Integer category;
+
 }

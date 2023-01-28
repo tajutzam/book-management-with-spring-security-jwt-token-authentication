@@ -1,9 +1,6 @@
 package com.zam.springsecurityjwt.entity;
 
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,10 +15,12 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity <T> {
     @CreatedBy
+    @Column(updatable = false  , nullable = false)
     protected T createdBy;
-
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
+    // to create create date cant update set updatetable false
+    @Column(updatable = false , nullable = false)
     protected Date createdDate;
 
     @LastModifiedBy
