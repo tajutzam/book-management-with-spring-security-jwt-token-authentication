@@ -7,20 +7,16 @@ import com.zam.springsecurityjwt.dto.KeyDTO;
 import com.zam.springsecurityjwt.entity.Book;
 import com.zam.springsecurityjwt.entity.Category;
 import com.zam.springsecurityjwt.exeptions.ApiRequestException;
-import com.zam.springsecurityjwt.exeptions.ExceptionCustomHandler;
 import com.zam.springsecurityjwt.repo.CategoryRepository;
-import com.zam.springsecurityjwt.service.BookService;
+import com.zam.springsecurityjwt.service.impl.BookServiceImpl;
 import com.zam.springsecurityjwt.util.Helper;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController()
@@ -29,7 +25,7 @@ import java.util.Optional;
 public class BookController {
 
     @Autowired
-    private BookService bookService;
+    private BookServiceImpl bookService;
     @Autowired
     private CategoryRepository categoryRepository;
 

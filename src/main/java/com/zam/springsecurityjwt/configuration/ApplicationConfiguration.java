@@ -1,7 +1,7 @@
 package com.zam.springsecurityjwt.configuration;
 
-import com.zam.springsecurityjwt.auditing.AuditingAwareImpl;
-import com.zam.springsecurityjwt.service.UserService;
+import com.zam.springsecurityjwt.util.auditing.AuditingAwareImpl;
+import com.zam.springsecurityjwt.service.impl.UserServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +21,7 @@ public class ApplicationConfiguration {
 
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -31,7 +31,7 @@ public class ApplicationConfiguration {
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userService);
+        authenticationProvider.setUserDetailsService(userServiceImpl);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }

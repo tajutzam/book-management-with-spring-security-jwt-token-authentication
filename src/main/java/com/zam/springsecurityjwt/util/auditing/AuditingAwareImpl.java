@@ -1,23 +1,19 @@
-package com.zam.springsecurityjwt.auditing;
+package com.zam.springsecurityjwt.util.auditing;
 
-import com.zam.springsecurityjwt.auth.JwtService;
-import com.zam.springsecurityjwt.entity.User;
+import com.zam.springsecurityjwt.service.impl.JwtServiceImpl;
 import com.zam.springsecurityjwt.exeptions.ApiRequestException;
 import com.zam.springsecurityjwt.repo.UserRepository;
 import com.zam.springsecurityjwt.util.Helper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AuditorAware;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 public class AuditingAwareImpl  implements AuditorAware<String> {
 
     @Autowired
-    private JwtService jwtService;
+    private JwtServiceImpl jwtService;
 
     @Autowired
     private UserRepository userRepository;

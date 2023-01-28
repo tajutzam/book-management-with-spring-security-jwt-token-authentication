@@ -1,7 +1,7 @@
 package com.zam.springsecurityjwt.entity;
 
 
-import com.zam.springsecurityjwt.enumclass.Role;
+import com.zam.springsecurityjwt.util.enumclass.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

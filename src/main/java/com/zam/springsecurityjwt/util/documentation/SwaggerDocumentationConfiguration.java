@@ -1,4 +1,4 @@
-package com.zam.springsecurityjwt.documentation;
+package com.zam.springsecurityjwt.util.documentation;
 
 
 import io.swagger.v3.oas.models.Components;

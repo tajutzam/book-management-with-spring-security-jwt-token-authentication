@@ -1,4 +1,4 @@
-package com.zam.springsecurityjwt.auth.response;
+package com.zam.springsecurityjwt.dto;
 
 import lombok.Builder;
 import lombok.Data;

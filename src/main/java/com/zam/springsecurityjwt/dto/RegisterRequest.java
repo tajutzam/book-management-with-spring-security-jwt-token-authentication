@@ -1,7 +1,7 @@
-package com.zam.springsecurityjwt.auth.requst;
+package com.zam.springsecurityjwt.dto;
 
 
-import com.zam.springsecurityjwt.enumclass.Role;
+import com.zam.springsecurityjwt.util.enumclass.Role;
 import lombok.Builder;
 import lombok.Data;
 

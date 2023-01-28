@@ -1,9 +1,8 @@
-package com.zam.springsecurityjwt.service;
+package com.zam.springsecurityjwt.service.impl;
 
-import com.zam.springsecurityjwt.auth.JwtService;
-import com.zam.springsecurityjwt.auth.requst.LoginRequest;
-import com.zam.springsecurityjwt.auth.requst.RegisterRequest;
-import com.zam.springsecurityjwt.auth.response.AuthResponse;
+import com.zam.springsecurityjwt.dto.LoginRequest;
+import com.zam.springsecurityjwt.dto.RegisterRequest;
+import com.zam.springsecurityjwt.dto.AuthResponse;
 import com.zam.springsecurityjwt.entity.User;
 import com.zam.springsecurityjwt.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserServiceImpl implements UserDetailsService {
     @Autowired
     private  UserRepository userRepository;
     @Lazy
@@ -25,7 +24,7 @@ public class UserService implements UserDetailsService {
     private  PasswordEncoder passwordEncoder;
     @Autowired
     @Lazy
-    private    JwtService jwtService;
+    private JwtServiceImpl jwtService;
 
     @Autowired
     @Lazy

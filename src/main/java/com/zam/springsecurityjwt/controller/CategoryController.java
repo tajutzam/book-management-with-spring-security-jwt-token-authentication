@@ -7,7 +7,7 @@ import com.zam.springsecurityjwt.dto.KeyDTO;
 import com.zam.springsecurityjwt.entity.Category;
 import com.zam.springsecurityjwt.exeptions.ApiRequestException;
 import com.zam.springsecurityjwt.repo.CategoryRepository;
-import com.zam.springsecurityjwt.service.CategoryService;
+import com.zam.springsecurityjwt.service.impl.CategoryServiceImpl;
 import com.zam.springsecurityjwt.util.Helper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -26,7 +26,7 @@ import java.util.Optional;
 @SecurityRequirement(name = "javainuseapi")
 public class CategoryController {
     @Autowired
-    private CategoryService categoryService;
+    private CategoryServiceImpl categoryService;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired

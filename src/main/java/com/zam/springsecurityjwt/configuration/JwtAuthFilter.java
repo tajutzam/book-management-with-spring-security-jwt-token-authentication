@@ -1,39 +1,29 @@
-package com.zam.springsecurityjwt.auth;
+package com.zam.springsecurityjwt.configuration;
 
 
+import com.zam.springsecurityjwt.service.impl.JwtServiceImpl;
 import com.zam.springsecurityjwt.entity.User;
-import com.zam.springsecurityjwt.service.UserService;
+import com.zam.springsecurityjwt.service.impl.UserServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
-
-    private  final JwtService jwtService;
-
-    private final UserService userService;
-
+    private  final JwtServiceImpl jwtService;
+    private final UserServiceImpl userServiceImpl;
     @Override
     protected void doFilterInternal(
            @NonNull HttpServletRequest request,
@@ -53,7 +43,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
           jwtToken = authHeader.substring(7);
           final String username = jwtService.extractUsername(jwtToken);
           if(username!= null && SecurityContextHolder.getContext().getAuthentication()==null){
-                    User userDetails = userService.loadUserByUsername(username);
+                    User userDetails = userServiceImpl.loadUserByUsername(username);
                     if(jwtService.isTokenValid(jwtToken , userDetails)){
                         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                                 userDetails ,
