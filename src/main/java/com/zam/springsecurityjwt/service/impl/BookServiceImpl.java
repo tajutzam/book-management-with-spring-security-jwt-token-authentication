@@ -10,6 +10,8 @@ import com.zam.springsecurityjwt.repo.CategoryRepository;
 import com.zam.springsecurityjwt.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +20,8 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     public List<BookResponse> findAll(){
         List<Book> all = bookRepository.findAll();
         List<BookResponse> response = new ArrayList<>();
@@ -33,29 +33,23 @@ public class BookServiceImpl implements BookService {
                             .price(book.getPrice())
                             .pages(book.getPages())
                             .categoryName(book.getCategory().getName())
+                            .author(book.getAuthor())
+                            .urlImage(book.getCoverImage() == null ? null :  ServletUriComponentsBuilder.fromCurrentContextPath()
+                                    .path("/api/v1/book/image/")
+                                    .path(book.getId().toString())
+                                    .toUriString())
                             .build()
             );
         });
         return response;
     }
-    public Optional<Book> addBook(BookDTO bookDTO){
-        Optional<Category> categoryOptional = categoryRepository.findById(bookDTO.getCategory());
-        if(categoryOptional.isPresent()){
-            var book = Book.builder().
-                    bookName(bookDTO.getBookName())
-                    .description(bookDTO.getDescription())
-                    .pages(bookDTO.getPages())
-                    .category(categoryOptional.get())
-                    .price(bookDTO.getPrice()).
-                    build();
-            Optional<Book> optional = bookRepository.findByBookName(bookDTO.getBookName());
+    public Optional<Book> addBook(Book book){
+            Optional<Book> optional = bookRepository.findByBookName(book.getBookName());
             if(optional.isPresent()){
                 return Optional.empty();
             }
             return Optional.of(bookRepository.save(book));
         }
-        return Optional.empty();
-    }
     public Optional<Book> findById(Integer uuid){
         return bookRepository.findById(uuid);
     }
@@ -64,14 +58,16 @@ public class BookServiceImpl implements BookService {
         if(optionalBook.isEmpty()){
             return Optional.empty();
         }
-        return Optional.of(bookRepository.save(
+        Optional<Category> optionalCategory = categoryRepository.findById(bookUpdateDto.getCategory());
+        return optionalCategory.map(category -> bookRepository.save(
                 Book.builder().id(bookUpdateDto.getId()).bookName(bookUpdateDto.getBookName())
                         .price(bookUpdateDto.getPrice())
                         .pages(bookUpdateDto.getPages())
-                        .build()
-        ));
+                        .author(bookUpdateDto.getAuthor())
+                        .category(category)
+                        .coverImage(optionalBook.get().getCoverImage())
+                        .build()));
     }
-
     public boolean deleteById(Integer uuid){
         Optional<Book> optionalBook = findById(uuid);
         if(optionalBook.isEmpty()){

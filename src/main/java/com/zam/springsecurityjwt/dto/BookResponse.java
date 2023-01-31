@@ -10,4 +10,6 @@ public class BookResponse {
     private Integer pages;
     private Integer price;
     private String categoryName;
+    private String author;
+    private String urlImage;
 }

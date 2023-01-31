@@ -29,6 +29,10 @@ public class SecurityConfiguration {
             "/api/v1/book/all" ,
             "/api/v1/category/all" ,
             "/api/v1/auth/**"
+            , "/api/v1/book/{asd}/{path}"
+            , "/api/download/{path}" ,
+            "/api/v1/school/" ,
+            "/api/v1/user/all"
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

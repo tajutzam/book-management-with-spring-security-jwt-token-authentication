@@ -18,12 +18,15 @@ import lombok.NoArgsConstructor;
 public class Book extends BaseEntity<String> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String description;
     private String bookName;
     private Integer price;
     private Integer pages;
+    private String author;
+    private String coverImage;
+
     @ManyToOne(cascade = CascadeType.ALL , optional = true )
     @JoinColumn(nullable = false , name = "category")
   @JsonBackReference

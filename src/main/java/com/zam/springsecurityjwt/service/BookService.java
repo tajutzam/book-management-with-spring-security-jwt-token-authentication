@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface BookService {
 
     public List<BookResponse> findAll();
-    public Optional<Book> addBook(BookDTO bookDTO);
+    public Optional<Book> addBook(Book bookDTO);
     public Optional<Book> findById(Integer uuid);
     public Optional<Book> updateBook(BookUpdateDto bookUpdateDto);
     public boolean deleteById(Integer uuid);

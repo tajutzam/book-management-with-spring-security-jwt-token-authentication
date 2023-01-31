@@ -14,5 +14,7 @@ public class BookUpdateDto {
     private String bookName;
     private Integer price;
     private Integer pages;
+    private Integer category;
+    private String author;
 
 }
